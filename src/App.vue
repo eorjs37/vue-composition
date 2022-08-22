@@ -3,12 +3,15 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
-import { computed } from "vue";
+import { onMounted } from "vue";
 
 export default {
   name: "App",
-  setup() {},
+  setup() {
+    onMounted(() => {
+      console.log("onMounted");
+    });
+  },
 };
 </script>
 
