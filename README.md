@@ -8,6 +8,14 @@
 
 > 1개의 값에 대해서 반응성을 사용하고 싶다면 사용하는것을 추천한다.
 
+```javascript
+const count = ref(0);
+
+const compCount = computed(() => {
+  return count.value * 2;
+});
+```
+
 ## reactive
 
 > 객체로 묶고 싶을때 사용하는 것을 추천한다.

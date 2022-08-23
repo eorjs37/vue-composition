@@ -34,6 +34,7 @@ import { reactive, ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 export default {
   setup() {
+    // 한개의 값에 대해 반응성을 사용할때
     const count = ref(0);
 
     const compCount = computed(() => {
@@ -46,7 +47,7 @@ export default {
       double: computed(() => event.count * 2),
     });
 
-    //Date
+    // 객체로 묶고 싶을때
     const stateDate = reactive({
       curDate: new Date(),
 
