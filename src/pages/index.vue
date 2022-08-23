@@ -5,6 +5,11 @@
     <button type="button" @click="count++">+</button><button type="button" @click="count--">-</button>
   </div>
 
+  <div>
+    <input type="number" v-model="count2" disabled />
+    <button type="button" @click="count2++">+</button><button type="button" @click="count2--">-</button>
+  </div>
+
   <h1>reactive count</h1>
   <div>
     <input type="number" v-model="event.double" disabled />
@@ -31,11 +36,12 @@
 
 <script>
 import { reactive, ref } from "@vue/reactivity";
-import { computed, onMounted, watch, watchEffect } from "@vue/runtime-core";
+import { computed, watch, watchEffect } from "@vue/runtime-core";
 export default {
   setup() {
     // 한개의 값에 대해 반응성을 사용할때
     const count = ref(0);
+    const count2 = ref(1);
 
     const compCount = computed(() => {
       return count.value * 2;
@@ -50,6 +56,7 @@ export default {
     // 객체로 묶고 싶을때
     const stateDate = reactive({
       curDate: new Date(),
+      text: "",
 
       compYyyyMmDd: computed(() => {
         const yyyy = stateDate.curDate.getFullYear();
@@ -78,12 +85,6 @@ export default {
       },
     });
 
-    //watch
-    watch(count, (cur, prev) => {
-      console.log("cur : ", cur);
-      console.log("prev : ", prev);
-    });
-
     //watch reactive
     watch(
       () => event.count,
@@ -92,16 +93,23 @@ export default {
       }
     );
 
-    //watchEffect
-    watchEffect(() => console.log("watchEffect : ", count.value));
+    //watch 여러개
+    watch([count, count2], ([countCur, count2Cur], [countPrev, count2Prev]) => {
+      console.log("countCur : ", countCur);
+      console.log("count2Cur : ", count2Cur);
 
-    //lifecycle
-    onMounted(() => {
-      console.log(process.env);
+      console.log("countPrev : ", countPrev);
+      console.log("count2Prev : ", count2Prev);
+    });
+
+    //watchEffect
+    watchEffect(() => {
+      console.log("watchEffect");
     });
 
     return {
       count,
+      count2,
       compCount,
       event,
       stateDate,
