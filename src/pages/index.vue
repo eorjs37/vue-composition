@@ -31,7 +31,7 @@
 
 <script>
 import { reactive, ref } from "@vue/reactivity";
-import { computed } from "@vue/runtime-core";
+import { computed, onMounted, watch, watchEffect } from "@vue/runtime-core";
 export default {
   setup() {
     // 한개의 값에 대해 반응성을 사용할때
@@ -76,6 +76,28 @@ export default {
 
         stateDate.curDate = new Date(cur);
       },
+    });
+
+    //watch
+    watch(count, (cur, prev) => {
+      console.log("cur : ", cur);
+      console.log("prev : ", prev);
+    });
+
+    //watch reactive
+    watch(
+      () => event.count,
+      (cur) => {
+        console.log("event count : ", cur);
+      }
+    );
+
+    //watchEffect
+    watchEffect(() => console.log("watchEffect : ", count.value));
+
+    //lifecycle
+    onMounted(() => {
+      console.log(process.env);
     });
 
     return {

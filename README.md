@@ -52,3 +52,11 @@ const stateDate = reactive({
   },
 });
 ```
+
+## watch
+
+> 객체의 반응을 감시하는 역할
+
+```
+
+```
