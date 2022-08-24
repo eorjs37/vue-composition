@@ -17,7 +17,7 @@
   </div>
 
   <h1>reactive Date</h1>
-  <div>
+  <div id="el">
     <h2>yyyy.mm.dd</h2>
     <span>
       {{ stateDate.compYyyyMmDd }}
@@ -45,36 +45,21 @@
     </div>
   </div>
 
-  <h1>deep watch</h1>
-  <div>
-    <input type="text" v-model="stateDate.obj.text" />
-    <input type="text" v-model="stateDate.obj.text2" />
-  </div>
+  <button @click="push()">push</button>
 </template>
 
 <script>
 import { reactive, ref } from "@vue/reactivity";
-import { computed, watch, watchEffect } from "@vue/runtime-core";
+import { computed, onMounted, onUnmounted, onUpdated, watch, watchEffect } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
 import _ from "lodash";
 
-const useObject = () => {
-  const item = reactive({
-    obj: {
-      a: 1,
-    },
-  });
-
-  return {
-    item,
-  };
-};
 export default {
   setup() {
-    const { item } = useObject();
-
     // 한개의 값에 대해 반응성을 사용할때
     const count = ref(0);
     const count2 = ref(1);
+    const router = useRouter();
 
     const compCount = computed(() => {
       return count.value * 2;
@@ -90,10 +75,6 @@ export default {
     const stateDate = reactive({
       curDate: new Date(),
       text: "",
-      obj: reactive({
-        text: "",
-        text2: "",
-      }),
 
       compYyyyMmDd: computed(() => {
         const yyyy = stateDate.curDate.getFullYear();
@@ -127,6 +108,11 @@ export default {
       name: "",
       fullName: "",
     });
+    const push = () => {
+      router.push({
+        path: "compositionapi",
+      });
+    };
 
     //watch
     watch(count, (cur, prev) => {
@@ -134,19 +120,21 @@ export default {
       console.log("prev : ", prev);
     });
 
-    //watch
-    watch(item.obj.a, (cur, prev) => {
-      console.log("item.obj.a cur : ", cur);
-      console.log("item.obj.a prev : ", prev);
-    });
-
-    watch(_.cloneDeep(stateDate.obj.text), (cur, prev) => {
-      console.log("text cur : ", cur);
-      console.log("text prev : ", prev);
-    });
-
     //watchEffect
     watchEffect(() => (name.fullName = `${name.familyName} ${name.name}`));
+
+    //lifecycle
+    onMounted(() => {
+      console.log("el : ", document.getElementById("el"));
+    });
+
+    onUpdated(() => {
+      console.log("onUpdated el : ", document.getElementById("el"));
+    });
+
+    onUnmounted(() => {
+      console.log("onUnmounted el : ", document.getElementById("el"));
+    });
 
     return {
       count,
@@ -155,6 +143,7 @@ export default {
       compCount,
       event,
       stateDate,
+      push,
     };
   },
 };

@@ -10,6 +10,7 @@ const routes = [
     component: () => import("@/pages/index.vue"),
   },
   {
+    name: "compositionapi",
     path: "/compositionapi",
     component: () => import("@/pages/compositionapi.vue"),
   },
