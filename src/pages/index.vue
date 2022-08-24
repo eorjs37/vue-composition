@@ -44,13 +44,34 @@
       </span>
     </div>
   </div>
+
+  <h1>deep watch</h1>
+  <div>
+    <input type="text" v-model="stateDate.obj.text" />
+    <input type="text" v-model="stateDate.obj.text2" />
+  </div>
 </template>
 
 <script>
 import { reactive, ref } from "@vue/reactivity";
 import { computed, watch, watchEffect } from "@vue/runtime-core";
+import _ from "lodash";
+
+const useObject = () => {
+  const item = reactive({
+    obj: {
+      a: 1,
+    },
+  });
+
+  return {
+    item,
+  };
+};
 export default {
   setup() {
+    const { item } = useObject();
+
     // 한개의 값에 대해 반응성을 사용할때
     const count = ref(0);
     const count2 = ref(1);
@@ -69,6 +90,10 @@ export default {
     const stateDate = reactive({
       curDate: new Date(),
       text: "",
+      obj: reactive({
+        text: "",
+        text2: "",
+      }),
 
       compYyyyMmDd: computed(() => {
         const yyyy = stateDate.curDate.getFullYear();
@@ -109,24 +134,19 @@ export default {
       console.log("prev : ", prev);
     });
 
-    //watch reactive
-    watch(
-      () => event.count,
-      (cur) => {
-        console.log("event count : ", cur);
-      }
-    );
+    //watch
+    watch(item.obj.a, (cur, prev) => {
+      console.log("item.obj.a cur : ", cur);
+      console.log("item.obj.a prev : ", prev);
+    });
+
+    watch(_.cloneDeep(stateDate.obj.text), (cur, prev) => {
+      console.log("text cur : ", cur);
+      console.log("text prev : ", prev);
+    });
 
     //watchEffect
     watchEffect(() => (name.fullName = `${name.familyName} ${name.name}`));
-    //watch 여러개
-    watch([count, count2], ([countCur, count2Cur], [countPrev, count2Prev]) => {
-      console.log("countCur : ", countCur);
-      console.log("count2Cur : ", count2Cur);
-
-      console.log("countPrev : ", countPrev);
-      console.log("count2Prev : ", count2Prev);
-    });
 
     return {
       count,
