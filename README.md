@@ -55,6 +55,8 @@ const stateDate = reactive({
 
 ## computed
 
+> 계산된 속성에 대해 사용 할때 사용된다.
+
 ## watch
 
 > 객체의 반응을 감시하는 역할 보통 이전값과 현재값 비교 할때 사용하기도 한다.
