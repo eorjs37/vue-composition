@@ -27,6 +27,18 @@
     <button @click="stateDate.next()">Next</button>
     <button @click="stateDate.prev()">Prev</button>
   </div>
+
+  <h1>watchEffect</h1>
+  <div>
+    <input type="text" v-model="name.familyName" />
+    <input type="text" v-model="name.name" />
+
+    <div>
+      <span>
+        {{ name.fullName }}
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -78,6 +90,12 @@ export default {
       },
     });
 
+    const name = reactive({
+      familyName: "",
+      name: "",
+      fullName: "",
+    });
+
     //watch
     watch(count, (cur, prev) => {
       console.log("cur : ", cur);
@@ -93,7 +111,7 @@ export default {
     );
 
     //watchEffect
-    watchEffect(() => console.log("watchEffect : ", count.value));
+    watchEffect(() => (name.fullName = `${name.familyName} ${name.name}`));
 
     //lifecycle
     onMounted(() => {
@@ -102,6 +120,7 @@ export default {
 
     return {
       count,
+      name,
       compCount,
       event,
       stateDate,
