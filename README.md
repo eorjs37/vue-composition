@@ -55,8 +55,6 @@ const stateDate = reactive({
 
 ## watch
 
-> 객체의 반응을 감시하는 역할
+> 객체의 반응을 감시하는 역할 보통 이전값과 현재값 비교 할때 사용하기도 한다.
 
-```
-
-```
+## watchEffect
