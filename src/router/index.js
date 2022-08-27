@@ -14,6 +14,11 @@ const routes = [
     path: "/compositionapi",
     component: () => import("@/pages/compositionapi.vue"),
   },
+  {
+    name: "animation",
+    path: "/animation",
+    component: () => import("@/pages/animation.vue"),
+  },
 ];
 
 const router = createRouter({
