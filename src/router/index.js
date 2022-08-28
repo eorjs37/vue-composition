@@ -19,6 +19,16 @@ const routes = [
     path: "/animation",
     component: () => import("@/pages/animation.vue"),
   },
+  {
+    name: "refReactive",
+    path: "/ref",
+    component: () => import("@/pages/refReactive.vue"),
+  },
+  {
+    name: "reactive",
+    path: "/reactive",
+    component: () => import("@/pages/reactive.vue"),
+  },
 ];
 
 const router = createRouter({
