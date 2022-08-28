@@ -3,10 +3,10 @@
 
   <ul class="menu">
     <li>
+      <input type="checkbox" id="menu1" hidden />
       <div class="menu-item">
         <span>메뉴1</span>
         <label for="menu1"><font-awesome-icon icon="fa-arrow-up" /></label>
-        <input type="checkbox" id="menu1" hidden />
       </div>
 
       <p class="desc">
@@ -15,10 +15,10 @@
       </p>
     </li>
     <li>
+      <input type="checkbox" id="menu2" hidden />
       <div class="menu-item">
         <span>메뉴2</span>
-        <label for="menu2"><font-awesome-icon icon="fa-arrow-down" /></label>
-        <input type="checkbox" id="menu2" hidden />
+        <label for="menu2"><font-awesome-icon icon="fa-arrow-up" /></label>
       </div>
 
       <p class="desc">
@@ -27,10 +27,10 @@
       </p>
     </li>
     <li>
+      <input type="checkbox" id="menu3" hidden />
       <div class="menu-item">
         <span>메뉴3</span>
         <label for="menu3"><font-awesome-icon icon="fa-arrow-up" /></label>
-        <input type="checkbox" id="menu3" hidden />
       </div>
 
       <p class="desc">
@@ -54,6 +54,8 @@ export default {
         disabled.value = false;
       }, 2000);
     };
+
+    const accordion = () => {};
 
     return {
       disabled,
@@ -80,9 +82,38 @@ export default {
 .desc {
   margin-top: 0;
   background-color: #eee;
-  word-break: break-all;
+  word-break: keep-all;
   text-align: left;
-  padding: 10px;
-  display: none;
+  height: 0px;
+  transition: all 0.35s;
+  padding: 0 1em;
+  overflow: hidden;
+}
+
+input[id="menu1"]:checked ~ .desc {
+  height: 100px;
+  padding: 1em;
+}
+
+input[id="menu1"]:checked + .menu-item > label[for="menu1"] {
+  transform: rotate(180deg);
+}
+
+input[id="menu2"]:checked ~ .desc {
+  height: 100px;
+  padding: 1em;
+}
+
+input[id="menu2"]:checked + .menu-item > label[for="menu2"] {
+  transform: rotate(180deg);
+}
+
+input[id="menu3"]:checked ~ .desc {
+  height: 100px;
+  padding: 1em;
+}
+
+input[id="menu3"]:checked + .menu-item > label[for="menu3"] {
+  transform: rotate(180deg);
 }
 </style>
