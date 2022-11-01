@@ -69,6 +69,57 @@ watch(count, (cur, prev) => {
 });
 ```
 
+> 여러개의 객체를 동시에 감시 할 수 있다.
+
+```html javascript css
+<template>
+  <h1>watch</h1>
+  <h1>{{ name.fullName }}</h1>
+  <div>
+    <label for="familyName">성 : </label>
+    <input type="text" v-model="name.familyName" />
+  </div>
+  <div>
+    <label for="familyName">이름 : </label>
+    <input type="text" v-model="name.name" />
+  </div>
+</template>
+
+<script>
+  import { reactive, watch } from "vue";
+
+  export default {
+    setup() {
+      const name = reactive({
+        familyName: "",
+        name: "",
+        fullName: "",
+      });
+
+      watch(
+        /* 배열에 담아서 여러개를 동시에 감시할 수 있도록 한다.*/
+        () => [name.familyName, name.name],
+        ([curFailyName, curName], [prevFailyName, prevName]) => {
+          /*.... */
+          console.log("curFailyName : ", curFailyName);
+          console.log("curName : ", curName);
+          console.log("prevFailyName : ", prevFailyName);
+          console.log("prevName : ", prevName);
+
+          name.fullName = `${curFailyName} ${curName}`;
+        }
+      );
+
+      return {
+        name,
+      };
+    },
+  };
+</script>
+
+<style lang="scss" scoped></style>
+```
+
 ## watchEffect
 
 > 객체의 반응을 즉시 반응할때 사용한다고 하지만, 경험으로는 아래처럼 사용하면 유용하다는 생각.

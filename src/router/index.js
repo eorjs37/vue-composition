@@ -29,6 +29,11 @@ const routes = [
     path: "/reactive",
     component: () => import("@/pages/reactive.vue"),
   },
+  {
+    name: "watch",
+    path: "/watch",
+    component: () => import("@/pages/watch.vue"),
+  },
 ];
 
 const router = createRouter({
